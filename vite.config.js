@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
     base: viteEnv.VITE_BASE,
     server: {
       host: '0.0.0.0',
-      port: '8080',
+      port: '7749',
       open: true,
       // 端口占用直接退出
       strictPort: true
