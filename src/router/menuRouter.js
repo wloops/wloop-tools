@@ -24,6 +24,14 @@ export const menuRouter = [
           title: '正则在线校验'
         },
         component: () => import('@/views/RegularPage/index.vue')
+      },
+      {
+        path: 'encode',
+        name: 'UrlEncode',
+        meta: {
+          title: 'URL 编码/解码'
+        },
+        component: () => import('@/views/EncodePage/index.vue')
       }
     ]
   }
