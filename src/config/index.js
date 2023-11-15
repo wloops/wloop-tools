@@ -1,9 +1,9 @@
 /*
- * @LastEditors: isboyjc
+ * @LastEditors: devtint
  * @Description: 全局config配置文件
  * @Date: 2022-09-17 14:35:02
  * @LastEditTime: 2022-11-13 22:23:16
- * @Author: isboyjc
+ * @Author: devtint
  */
 
 // 获取环境变量
@@ -28,22 +28,22 @@ const configSource = {
   // 服务端接口路径
   serverUrl: ENV.VITE_BASE_SERVER_URL,
   // GitHub地址
-  github: 'https://github.com/isboyjc/toolsdog',
+  github: 'https://github.com/tintyup/tinty-tools',
   // 备案号
-  icp: '京ICP备2022xxxxxxx号',
+  icp: '粤ICP备2023xxxxxxx号',
   // 个人配置
   me: {
-    name: 'isboyjc',
+    name: 'devtint',
     // 公众号
-    gzhName: '不正经的前端',
-    gzhUrl: 'http://qiniuimages.isboyjc.com/picgo/202210030159449.jpeg',
+    // gzhName: '不正经的前端',
+    // gzhUrl: 'http://qiniuimages.devtint.com/picgo/202210030159449.jpeg',
     // github
-    github: 'https://github.com/isboyjc'
+    github: 'https://github.com/devtint'
   }
 }
 
 /**
- * @Author isboyjc
+ * @Author devtint
  * @Date 2022-09-17 14:35:02
  * @description 设置全局配置
  * @param {Object} cfg 配置项
@@ -55,7 +55,7 @@ const setConfig = cfg => {
 }
 
 /**
- * @Author isboyjc
+ * @Author devtint
  * @Date 2022-09-17 14:35:02
  * @description 重置全局配置
  * @param {*}
@@ -68,7 +68,7 @@ const resetConfig = () => {
 resetConfig()
 
 /**
- * @Author isboyjc
+ * @Author devtint
  * @Date 2022-09-17 14:35:02
  * @description 获取全局配置
  * @param {String} key 配置项，支持 'a.b.c' 的方式获取

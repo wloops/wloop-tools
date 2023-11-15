@@ -3,7 +3,7 @@ const route = useRoute()
 const title = useTitle()
 
 watchEffect(() => {
-  title.value = route.meta.title || 'TOOLSDOG'
+  title.value = route.meta.title || 'tintyTools'
 })
 </script>
 <template>
