@@ -66,7 +66,7 @@ const deleteText = () => {
           <template #description>
             <div class="flex justify-between w-full">
               <div class="functionTitle">
-                <icon-unitconverterultimate
+                <icon-tabler:switch-horizontal
                   class="text-[var(--color-neutral-6)] mr-5px"
                 />
                 <span>转换模式</span>

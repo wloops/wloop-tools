@@ -1,10 +1,3 @@
-/*
- * @LastEditors: isboyjc
- * @Description: 入口文件
- * @Date: 2022-09-17 14:35:02
- * @LastEditTime: 2022-11-29 07:01:20
- * @Author: isboyjc
- */
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // 引入 Pinia 状态持久化插件
