@@ -14,6 +14,8 @@ import vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 // 组件自动引入插件
 import Components from 'unplugin-vue-components/vite'
+// 自动生成路由引入插件
+// import VueRouter from 'unplugin-vue-router/vite'
 // ArcoVue、VueUse 组件和指令自动引入解析器
 import {
   ArcoResolver,
@@ -79,6 +81,15 @@ export default defineConfig(({ mode }) => {
       }
     },
     plugins: [
+      // VueRouter({
+      //   routesFolder: 'src/views', // 自动生成路由的文件夹
+      //   extensions: ['.vue'], // 生成路由的扩展名
+      //   // 要从路线生成中排除的文件列表
+      //   // 例如['**/__*']将排除以'__'开头的所有文件和文件夹
+      //   //例如['**/__*/**/*']将排除以'__'开头的文件夹中的所有文件
+      //   //例如['**/*。component.vue']将排除以`.component.vue`的结尾的组件
+      //   exclude: ['**/components/*.vue']
+      // }),
       vue(),
       // 使用Unocss
       Unocss({

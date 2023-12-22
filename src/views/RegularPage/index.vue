@@ -254,7 +254,7 @@ const regCopy = async () => {
   </div>
 </template>
 
-<style>
+<style scoped>
 .matching {
   @apply px-0px rounded-4px box-border;
 }

@@ -32,6 +32,14 @@ export const menuRouter = [
           title: 'URL 编码/解码'
         },
         component: () => import('@/views/EncodePage/index.vue')
+      },
+      {
+        path: 'test',
+        name: 'test',
+        meta: {
+          title: 'test'
+        },
+        component: () => import('@/views/test/index.vue')
       }
     ]
   }
