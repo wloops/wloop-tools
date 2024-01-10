@@ -34,13 +34,21 @@ export const menuRouter = [
         component: () => import('@/views/EncodePage/index.vue')
       },
       {
-        path: 'test',
-        name: 'test',
+        path: 'stringTool',
+        name: 'StringToolPage',
         meta: {
-          title: 'test'
+          title: '字符串工具'
         },
-        component: () => import('@/views/test/index.vue')
+        component: () => import('@/views/StringToolPage/index.vue')
       }
+      // {
+      //   path: 'test',
+      //   name: 'test',
+      //   meta: {
+      //     title: 'test'
+      //   },
+      //   component: () => import('@/views/test/index.vue')
+      // }
     ]
   }
 ]

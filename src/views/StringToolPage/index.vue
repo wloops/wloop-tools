@@ -14,6 +14,26 @@ const modeList = ref([
   {
     label: '小写转換 (lower case)',
     value: 'lower_case'
+  },
+  {
+    label: '单词首字母大写转換 (TitIe Case)',
+    value: 'title_case'
+  },
+  {
+    label: '蛇形命名法转換 (snake_case)',
+    value: 'snake_case'
+  },
+  {
+    label: '短横线命名法转換 (kebab-case)',
+    value: 'kebab_case'
+  },
+  {
+    label: '驼峰转换 (camelCase)',
+    value: 'camel_case'
+  },
+  {
+    label: '帕斯卡转換 (PascalCase)',
+    value: 'pascal_case'
   }
 ])
 
@@ -69,6 +89,40 @@ const convert = value => {
       result.value = inputText.value.toLowerCase()
       inputChange(result.value)
       break
+    case 'title_case':
+      // 单词首字母大写转換
+      result.value = inputText.value.replace(/\b\w/g, function (m) {
+        return m.toUpperCase()
+      })
+      inputChange(result.value)
+      break
+    case 'snake_case':
+      // 蛇形命名法转換 空格/短横线/驼峰转换为下划线分割
+      result.value = inputText.value
+        .replace(/\s+/g, '_')
+        .replace(/\-/g, '_')
+        .replace(/\B([A-Z])/g, '_$1')
+        .toLowerCase()
+
+      inputChange(result.value)
+      break
+    case 'kebab_case':
+      // 短横线命名法转換 空格/下划线/驼峰转换为短横线分割
+      result.value = inputText.value
+        .replace(/\s+/g, '-')
+        .replace(/\_/g, '-')
+        .replace(/\B([A-Z])/g, '-$1')
+        .toLowerCase()
+
+      inputChange(result.value)
+      break
+    case 'camel_case':
+      // 驼峰转換 除了第一个单词,其余单词首字母大写
+      break
+    case 'pascal_case':
+      // 帕斯卡转換
+      break
+
     default:
       break
   }
