@@ -70,7 +70,7 @@ const deleteText = () => {
 
 const result = ref('')
 const convert = value => {
-  result.value = value
+  result.value = inputText.value
   switch (value) {
     case 'sentence_case':
       // 将句子首字母大写转換
@@ -90,10 +90,10 @@ const convert = value => {
       inputChange(result.value)
       break
     case 'title_case':
-      // 单词首字母大写转換
-      result.value = inputText.value.replace(/\b\w/g, function (m) {
-        return m.toUpperCase()
-      })
+      // 每个单词首字母大写转換
+      result.value = inputText.value.replace(/(?:^|\b)(\w)/g, c =>
+        c.toUpperCase()
+      )
       inputChange(result.value)
       break
     case 'snake_case':
@@ -118,6 +118,7 @@ const convert = value => {
       break
     case 'camel_case':
       // 驼峰转換 除了第一个单词,其余单词首字母大写
+
       break
     case 'pascal_case':
       // 帕斯卡转換
@@ -125,6 +126,14 @@ const convert = value => {
 
     default:
       break
+  }
+
+  function toHumpName(str) {
+    var re = /-(\w)/g // \w匹配所有的字母和数字字符以及下划线_
+    return str.replace(re, function ($0, $1) {
+      // 第一个参数re表示正则,第二个回调函数,对该字符串处理方式,圆括号内的形参数表示正则表达式的子选项
+      return $1.toUpperCase() // 转大写
+    })
   }
 }
 </script>
