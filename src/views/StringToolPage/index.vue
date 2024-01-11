@@ -118,7 +118,13 @@ const convert = value => {
       break
     case 'camel_case':
       // 驼峰转換 除了第一个单词,其余单词首字母大写
-
+      result.value = inputText.value.replace(
+        /[-_\s]+(.)?/g,
+        function (match, c) {
+          return c ? c.toUpperCase() : ''
+        }
+      )
+      inputChange(result.value)
       break
     case 'pascal_case':
       // 帕斯卡转換
