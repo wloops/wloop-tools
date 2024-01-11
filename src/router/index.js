@@ -21,7 +21,7 @@ const router = createRouter({
           path: '/',
           name: 'HomePage',
           meta: {
-            title: 'tintyTools'
+            title: 'wloop Tools'
           },
           component: () => import('@/views/HomePage.vue')
         },

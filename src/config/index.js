@@ -33,12 +33,12 @@ const configSource = {
   icp: '粤ICP备2023xxxxxxx号',
   // 个人配置
   me: {
-    name: 'devtint',
+    name: 'wloop',
     // 公众号
     // gzhName: '不正经的前端',
     // gzhUrl: 'http://qiniuimages.devtint.com/picgo/202210030159449.jpeg',
     // github
-    github: 'https://github.com/devtint'
+    github: 'https://github.com/wloops'
   }
 }
 
