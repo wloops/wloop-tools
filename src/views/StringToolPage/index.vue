@@ -40,7 +40,11 @@ const modeList = ref([
 const inputText = ref('')
 const outputText = ref('')
 const inputChange = value => {
+  // 判断是否有<br>
   outputText.value = value
+  if (value.indexOf(',') !== -1) {
+    outputText.value = value.replace(/,/g, '\n')
+  }
 }
 const pasteText = () => {
   // 从剪贴板中粘贴到输入框
@@ -70,35 +74,36 @@ const deleteText = () => {
 
 const result = ref('')
 const convert = value => {
-  result.value = inputText.value
+  console.log('原始输入字符串:', inputText.value)
+  const thenInputText = inputText.value.replace(/\n/g, ',')
   switch (value) {
     case 'sentence_case':
       // 将句子首字母大写转換
-      result.value = inputText.value.replace(/(\b|^)[a-z]/g, function (m) {
+      result.value = thenInputText.replace(/(\b|^)[a-z]/g, function (m) {
         return m.toUpperCase()
       })
       inputChange(result.value)
       break
     case 'upper_case':
       // 全部字母转換为大写
-      result.value = inputText.value.toUpperCase()
+      result.value = thenInputText.toUpperCase()
       inputChange(result.value)
       break
     case 'lower_case':
       // 全部字母转換为小写
-      result.value = inputText.value.toLowerCase()
+      result.value = thenInputText.toLowerCase()
       inputChange(result.value)
       break
     case 'title_case':
       // 每个单词首字母大写转換
-      result.value = inputText.value.replace(/(?:^|\b)(\w)/g, c =>
+      result.value = thenInputText.replace(/(?:^|\b)(\w)/g, c =>
         c.toUpperCase()
       )
       inputChange(result.value)
       break
     case 'snake_case':
       // 蛇形命名法转換 空格/短横线/驼峰转换为下划线分割
-      result.value = inputText.value
+      result.value = thenInputText
         .replace(/\s+/g, '_')
         .replace(/\-/g, '_')
         .replace(/\B([A-Z])/g, '_$1')
@@ -108,7 +113,7 @@ const convert = value => {
       break
     case 'kebab_case':
       // 短横线命名法转換 空格/下划线/驼峰转换为短横线分割
-      result.value = inputText.value
+      result.value = thenInputText
         .replace(/\s+/g, '-')
         .replace(/\_/g, '-')
         .replace(/\B([A-Z])/g, '-$1')
@@ -118,17 +123,14 @@ const convert = value => {
       break
     case 'camel_case':
       // 驼峰转換 除了第一个单词,其余单词首字母大写
-      result.value = inputText.value.replace(
-        /[-_\s]+(.)?/g,
-        function (match, c) {
-          return c ? c.toUpperCase() : ''
-        }
-      )
+      result.value = thenInputText.replace(/[-_\s]+(.)?/g, function (match, c) {
+        return c ? c.toUpperCase() : ''
+      })
       inputChange(result.value)
       break
     case 'pascal_case':
       // 帕斯卡命名法转換
-      result.value = inputText.value
+      result.value = thenInputText
         .replace(/[-_\s]+(.)?/g, function (match, c) {
           return c ? c.toUpperCase() : ''
         })
@@ -141,7 +143,11 @@ const convert = value => {
     default:
       break
   }
+
+  console.log('输出字符串:', result.value)
 }
+
+// 输入字符串中的换行符处理
 </script>
 
 <template>
