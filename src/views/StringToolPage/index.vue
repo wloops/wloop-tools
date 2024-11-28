@@ -1,218 +1,59 @@
 <script setup>
 import { Message } from '@arco-design/web-vue'
 import { IconPaste, IconCopy, IconDelete } from '@arco-design/web-vue/es/icon'
-import IcoTablerTextSize from '~icons/tabler/text-size'
-import IconTablerList from '~icons/tabler/list'
-import IconTablerCursorText from '~icons/tabler/cursor-text'
-import IconTablerColumnInsertRight from '~icons/tabler/column-insert-right'
-import IconTablerSelect from '~icons/tabler/select'
-import IconTablerChartDots from '~icons/tabler/chart-dots'
-import IconTablerSwitchHorizontal from '~icons/tabler/switch-horizontal'
+import { useTextStats } from './composables/useTextStats'
+import { useTextTransform } from './composables/useTextTransform'
+import { useClipboard } from './composables/useClipboard'
+import { textModes } from './constants'
+import { icons } from './icons'
 
-const modeList = ref([
-  {
-    label: '句子首字母大写转換 (Sentence case)',
-    value: 'sentence_case'
-  },
-  {
-    label: '大写转換 (UPPER CASE)',
-    value: 'upper_case'
-  },
-  {
-    label: '小写转換 (lower case)',
-    value: 'lower_case'
-  },
-  {
-    label: '单词首字母大写转換 (TitIe Case)',
-    value: 'title_case'
-  },
-  {
-    label: '蛇形命名法转換 (snake_case)',
-    value: 'snake_case'
-  },
-  {
-    label: '短横线命名法转換 (kebab-case)',
-    value: 'kebab_case'
-  },
-  {
-    label: '驼峰转换 (camelCase)',
-    value: 'camel_case'
-  },
-  {
-    label: '帕斯卡转換 (PascalCase)',
-    value: 'pascal_case'
-  }
-])
-
+// 文本状态管理
 const inputText = ref('')
 const outputText = ref('')
-const inputChange = value => {
-  // 判断是否有<br>
+
+// 组合式函数
+const { textStats, updateTextStats, handleTextareaSelect, handleCursorMove } =
+  useTextStats()
+const { transformText } = useTextTransform()
+const { copyToClipboard, pasteFromClipboard } = useClipboard()
+
+// 文本变更处理
+const handleInputChange = value => {
   outputText.value = value
-  if (value.indexOf(',') !== -1) {
+  if (value.includes(',')) {
     outputText.value = value.replace(/,/g, '\n')
   }
-  updateTextStats()
+  updateTextStats(value)
 }
-const pasteText = () => {
-  // 从剪贴板中粘贴到入框
-  navigator.clipboard.readText().then(function (text) {
-    console.log(text)
-  })
+
+// 文本转换处理
+const handleConvert = mode => {
+  const result = transformText(inputText.value, mode)
+  outputText.value = result
+  updateTextStats(result)
 }
-const copyText = () => {
-  // 复制到剪贴板
-  let text = outputText.value
-  console.log('copyText', text)
-  if (text !== '') {
-    // let input = document.createElement('input')
-    // input.value = text
-    // document.body.appendChild(input)
-    // input.select()
-    // document.execCommand('Copy')
-    // input.remove()
-    navigator.clipboard.writeText(text)
+
+// 剪贴板操作
+const handlePaste = async () => {
+  const text = await pasteFromClipboard()
+  if (text) {
+    inputText.value = text
+    updateTextStats(text)
+  }
+}
+
+const handleCopy = async () => {
+  if (outputText.value) {
+    await copyToClipboard(outputText.value)
     Message.success('复制成功')
   }
 }
-const deleteText = () => {
+
+// 清空操作
+const handleClear = () => {
   inputText.value = ''
   outputText.value = ''
-}
-
-const result = ref('')
-const convert = value => {
-  console.log('原始输入字符串:', inputText.value)
-  const thenInputText = inputText.value.replace(/\n/g, ',')
-  switch (value) {
-    case 'sentence_case':
-      // 将句子首字母大写转換
-      result.value = thenInputText.replace(/(\b|^)[a-z]/g, function (m) {
-        return m.toUpperCase()
-      })
-      inputChange(result.value)
-      break
-    case 'upper_case':
-      // 全部字母转換为大写
-      result.value = thenInputText.toUpperCase()
-      inputChange(result.value)
-      break
-    case 'lower_case':
-      // 全部字母转換为小写
-      result.value = thenInputText.toLowerCase()
-      inputChange(result.value)
-      break
-    case 'title_case':
-      // 每个单词首字母大写转換
-      result.value = thenInputText.replace(/(?:^|\b)(\w)/g, c =>
-        c.toUpperCase()
-      )
-      inputChange(result.value)
-      break
-    case 'snake_case':
-      // 蛇形命名法转換 空格/短横线/驼峰转换为下划线分割
-      result.value = thenInputText
-        .replace(/\s+/g, '_')
-        .replace(/\-/g, '_')
-        .replace(/\B([A-Z])/g, '_$1')
-        .toLowerCase()
-
-      inputChange(result.value)
-      break
-    case 'kebab_case':
-      // 短横线命名法转換 空格/下划线/驼峰转换为短横线分割
-      result.value = thenInputText
-        .replace(/\s+/g, '-')
-        .replace(/\_/g, '-')
-        .replace(/\B([A-Z])/g, '-$1')
-        .toLowerCase()
-
-      inputChange(result.value)
-      break
-    case 'camel_case':
-      // 驼峰转換 除了第一个单词,其余单词首字母大写
-      result.value = thenInputText.replace(/[-_\s]+(.)?/g, function (match, c) {
-        return c ? c.toUpperCase() : ''
-      })
-      inputChange(result.value)
-      break
-    case 'pascal_case':
-      // 帕斯卡命名法转換
-      result.value = thenInputText
-        .replace(/[-_\s]+(.)?/g, function (match, c) {
-          return c ? c.toUpperCase() : ''
-        })
-        .replace(/^[a-z]/, function (match) {
-          return match.toUpperCase()
-        })
-      inputChange(result.value)
-      break
-
-    default:
-      break
-  }
-
-  console.log('输出字符串:', result.value)
-}
-
-// 输入字符串中的换行符处理
-
-// 添加新的响应式变量
-const textStats = ref({
-  length: 0,
-  lines: 0,
-  cursorPosition: { row: 1, col: 1 },
-  selection: 0,
-  selectionRange: { start: 0, end: 0 }
-})
-
-// 添加文本统计更新函数
-const updateTextStats = () => {
-  const text = inputText.value
-  textStats.value.length = text.length
-  textStats.value.lines = text ? text.split('\n').length : 0
-}
-
-// 修改光标位置和选择处理函数
-const handleTextareaSelect = event => {
-  const target = event.target
-  const text = target.value
-  const cursorPos = target.selectionStart
-
-  // 计算当前行号
-  const textBeforeCursor = text.substring(0, cursorPos)
-  const row = textBeforeCursor.split('\n').length
-
-  // 计算当前列号
-  const lastNewLine = textBeforeCursor.lastIndexOf('\n')
-  const col = lastNewLine === -1 ? cursorPos + 1 : cursorPos - lastNewLine
-
-  textStats.value.cursorPosition = { row, col }
-
-  // 更新选择信息
-  const selectionStart = target.selectionStart
-  const selectionEnd = target.selectionEnd
-  textStats.value.selection = Math.abs(selectionEnd - selectionStart)
-
-  if (textStats.value.selection > 0) {
-    // 计算选择范围的行号
-    const textBeforeStart = text.substring(0, selectionStart)
-    const textBeforeEnd = text.substring(0, selectionEnd)
-    const startRow = textBeforeStart.split('\n').length
-    const endRow = textBeforeEnd.split('\n').length
-
-    textStats.value.selectionRange = {
-      start: Math.min(startRow, endRow),
-      end: Math.max(startRow, endRow)
-    }
-  } else {
-    textStats.value.selectionRange = { start: 0, end: 0 }
-  }
-}
-
-// 添加监听光标移动事件
-const handleCursorMove = event => {
-  handleTextareaSelect(event)
+  updateTextStats('')
 }
 </script>
 
@@ -225,13 +66,13 @@ const handleCursorMove = event => {
             <h2 class="m-5">输入文本</h2>
             <div class="buttons mr-5">
               <a-space>
-                <a-button @click="pasteText">
+                <a-button @click="handlePaste">
                   <template #icon>
                     <icon-paste />
                   </template>
                   <template #default>粘贴</template>
                 </a-button>
-                <a-button @click="deleteText">
+                <a-button @click="handleClear">
                   <template #icon>
                     <icon-delete />
                   </template>
@@ -253,7 +94,7 @@ const handleCursorMove = event => {
               @select="handleTextareaSelect"
               @click="handleCursorMove"
               @keyup="handleCursorMove"
-              @input="inputChange"
+              @input="handleInputChange"
             />
             <div class="text-stats-bar">
               <span class="stat-item">
@@ -295,13 +136,13 @@ const handleCursorMove = event => {
             <h2 class="m-5">输出结果</h2>
             <div class="buttons mr-5">
               <a-space>
-                <a-button @click="copyText">
+                <a-button @click="handleCopy">
                   <template #icon>
                     <icon-copy />
                   </template>
                   <template #default>复制</template>
                 </a-button>
-                <a-button @click="deleteText">
+                <a-button @click="handleClear">
                   <template #icon>
                     <icon-delete />
                   </template>
@@ -342,8 +183,8 @@ const handleCursorMove = event => {
             </a-card-meta>
             <div mt-8 flex>
               <a-space wrap>
-                <div v-for="item in modeList">
-                  <a-button type="dashed" @click="convert(item.value)">{{
+                <div v-for="item in textModes">
+                  <a-button type="dashed" @click="handleConvert(item.value)">{{
                     item.label
                   }}</a-button>
                 </div>
