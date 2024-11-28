@@ -1,10 +1,13 @@
 <script setup>
 import { Message } from '@arco-design/web-vue'
 import { IconPaste, IconCopy, IconDelete } from '@arco-design/web-vue/es/icon'
+import IconRiTextWrap from '~icons/ri/text-wrap'
+import IconRiCodeBoxLine from '~icons/ri/code-box-line'
+import IconRiFormatClear from '~icons/ri/format-clear'
 import { useTextStats } from './composables/useTextStats'
 import { useTextTransform } from './composables/useTextTransform'
 import { useClipboard } from './composables/useClipboard'
-import { textModes } from './constants'
+import { textModes, functionCategories } from './constants'
 import { icons } from './icons'
 
 // 文本状态管理
@@ -54,6 +57,13 @@ const handleClear = () => {
   inputText.value = ''
   outputText.value = ''
   updateTextStats('')
+}
+
+// 创建图标映射
+const iconComponents = {
+  'ri-text-wrap': IconRiTextWrap,
+  'ri-code-box-line': IconRiCodeBoxLine,
+  'ri-format-clear': IconRiFormatClear
 }
 </script>
 
@@ -168,26 +178,31 @@ const handleClear = () => {
       <div class="w-full">
         <h2 class="m-5">实用功能</h2>
         <div class="flex flex-col m-5 gap-4">
-          <a-card hoverable>
+          <a-card
+            v-for="category in functionCategories"
+            :key="category.id"
+            hoverable
+          >
             <a-card-meta>
               <template #description>
                 <div class="flex justify-between w-full">
                   <div class="functionTitle">
-                    <icon-tabler-switch-horizontal
-                      class="text-[var(--color-neutral-6)] mr-5px"
+                    <component
+                      :is="iconComponents[category.icon]"
+                      class="text-[var(--color-neutral-6)] mr-2 text-lg"
                     />
-                    <span>转换模式</span>
+                    <span>{{ category.title }}</span>
                   </div>
                 </div>
               </template>
             </a-card-meta>
             <div mt-8 flex>
               <a-space wrap>
-                <div v-for="item in textModes">
-                  <a-button type="dashed" @click="handleConvert(item.value)">{{
-                    item.label
-                  }}</a-button>
-                </div>
+                <template v-for="mode in category.modes" :key="mode">
+                  <a-button type="dashed" @click="handleConvert(mode)">
+                    {{ textModes.find(m => m.value === mode)?.label }}
+                  </a-button>
+                </template>
               </a-space>
             </div>
           </a-card>

@@ -48,3 +48,29 @@ export const textModes = [
     value: 'add_line_numbers'
   }
 ]
+
+export const functionCategories = [
+  {
+    id: 'case',
+    title: '大小写转换',
+    icon: 'ri-text-wrap',
+    modes: ['sentence_case', 'upper_case', 'lower_case', 'title_case']
+  },
+  {
+    id: 'naming',
+    title: '命名格式',
+    icon: 'ri-code-box-line',
+    modes: ['snake_case', 'kebab_case', 'camel_case', 'pascal_case']
+  },
+  {
+    id: 'clean',
+    title: '清理优化',
+    icon: 'ri-format-clear',
+    modes: [
+      'remove_empty_lines',
+      'remove_duplicate_lines',
+      'trim_spaces',
+      'add_line_numbers'
+    ]
+  }
+]
