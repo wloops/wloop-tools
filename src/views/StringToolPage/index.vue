@@ -1,6 +1,13 @@
 <script setup>
 import { Message } from '@arco-design/web-vue'
 import { IconPaste, IconCopy, IconDelete } from '@arco-design/web-vue/es/icon'
+import IcoTablerTextSize from '~icons/tabler/text-size'
+import IconTablerList from '~icons/tabler/list'
+import IconTablerCursorText from '~icons/tabler/cursor-text'
+import IconTablerColumnInsertRight from '~icons/tabler/column-insert-right'
+import IconTablerSelect from '~icons/tabler/select'
+import IconTablerChartDots from '~icons/tabler/chart-dots'
+import IconTablerSwitchHorizontal from '~icons/tabler/switch-horizontal'
 
 const modeList = ref([
   {
@@ -45,9 +52,10 @@ const inputChange = value => {
   if (value.indexOf(',') !== -1) {
     outputText.value = value.replace(/,/g, '\n')
   }
+  updateTextStats()
 }
 const pasteText = () => {
-  // 从剪贴板中粘贴到输入框
+  // 从剪贴板中粘贴到入框
   navigator.clipboard.readText().then(function (text) {
     console.log(text)
   })
@@ -148,6 +156,64 @@ const convert = value => {
 }
 
 // 输入字符串中的换行符处理
+
+// 添加新的响应式变量
+const textStats = ref({
+  length: 0,
+  lines: 0,
+  cursorPosition: { row: 1, col: 1 },
+  selection: 0,
+  selectionRange: { start: 0, end: 0 }
+})
+
+// 添加文本统计更新函数
+const updateTextStats = () => {
+  const text = inputText.value
+  textStats.value.length = text.length
+  textStats.value.lines = text ? text.split('\n').length : 0
+}
+
+// 修改光标位置和选择处理函数
+const handleTextareaSelect = event => {
+  const target = event.target
+  const text = target.value
+  const cursorPos = target.selectionStart
+
+  // 计算当前行号
+  const textBeforeCursor = text.substring(0, cursorPos)
+  const row = textBeforeCursor.split('\n').length
+
+  // 计算当前列号
+  const lastNewLine = textBeforeCursor.lastIndexOf('\n')
+  const col = lastNewLine === -1 ? cursorPos + 1 : cursorPos - lastNewLine
+
+  textStats.value.cursorPosition = { row, col }
+
+  // 更新选择信息
+  const selectionStart = target.selectionStart
+  const selectionEnd = target.selectionEnd
+  textStats.value.selection = Math.abs(selectionEnd - selectionStart)
+
+  if (textStats.value.selection > 0) {
+    // 计算选择范围的行号
+    const textBeforeStart = text.substring(0, selectionStart)
+    const textBeforeEnd = text.substring(0, selectionEnd)
+    const startRow = textBeforeStart.split('\n').length
+    const endRow = textBeforeEnd.split('\n').length
+
+    textStats.value.selectionRange = {
+      start: Math.min(startRow, endRow),
+      end: Math.max(startRow, endRow)
+    }
+  } else {
+    textStats.value.selectionRange = { start: 0, end: 0 }
+  }
+}
+
+// 添加监听光标移动事件
+const handleCursorMove = event => {
+  handleTextareaSelect(event)
+}
 </script>
 
 <template>
@@ -184,7 +250,44 @@ const convert = value => {
                 minRows: 8,
                 maxRows: 8
               }"
+              @select="handleTextareaSelect"
+              @click="handleCursorMove"
+              @keyup="handleCursorMove"
+              @input="inputChange"
             />
+            <div class="text-stats-bar">
+              <span class="stat-item">
+                <icon-tabler-text-size class="stat-icon" />
+                长度: {{ textStats.length }}
+              </span>
+              <span class="stat-item">
+                <icon-tabler-list class="stat-icon" />
+                行数: {{ textStats.lines }}
+              </span>
+              <span class="stat-item">
+                <icon-tabler-cursor-text class="stat-icon" />
+                行: {{ textStats.cursorPosition.row }}
+              </span>
+              <span class="stat-item">
+                <icon-tabler-column-insert-right class="stat-icon" />
+                列: {{ textStats.cursorPosition.col }}
+              </span>
+              <span
+                class="stat-item"
+                :class="{ 'stat-highlight': textStats.selection > 0 }"
+              >
+                <icon-tabler-select class="stat-icon" />
+                已选择: {{ textStats.selection }}
+                <template v-if="textStats.selection > 0">
+                  |
+                  {{
+                    textStats.selectionRange.end -
+                    textStats.selectionRange.start +
+                    1
+                  }}行
+                </template>
+              </span>
+            </div>
           </div>
         </div>
         <div class="w-full m-5">
@@ -223,18 +326,17 @@ const convert = value => {
       </div>
       <div class="w-full">
         <h2 class="m-5">实用功能</h2>
-        <div class="flex flex-row m-5">
-          <a-card hoverable w-full>
+        <div class="flex flex-col m-5 gap-4">
+          <a-card hoverable>
             <a-card-meta>
               <template #description>
                 <div class="flex justify-between w-full">
                   <div class="functionTitle">
-                    <icon-tabler:switch-horizontal
+                    <icon-tabler-switch-horizontal
                       class="text-[var(--color-neutral-6)] mr-5px"
                     />
                     <span>转换模式</span>
                   </div>
-                  <div></div>
                 </div>
               </template>
             </a-card-meta>
@@ -257,5 +359,31 @@ const convert = value => {
 <style scoped>
 .functionTitle {
   @apply text-shadow-sm font-600 text-lg flex items-center;
+}
+.text-stats-bar {
+  @apply flex items-center gap-3 mt-2;
+}
+
+.stat-item {
+  @apply flex items-center text-sm;
+  color: var(--color-neutral-6);
+}
+
+.stat-highlight {
+  color: var(--color-primary-6);
+  font-weight: 600;
+  background-color: var(--color-primary-light-1);
+  padding: 0px 8px;
+  border-radius: 4px;
+  /* 添加过渡效果 */
+  transition: all 0.2s ease;
+}
+
+.stat-highlight .stat-icon {
+  color: var(--color-primary-6);
+}
+
+.stat-icon {
+  @apply mr-1 text-current;
 }
 </style>
