@@ -46,7 +46,7 @@ export default defineConfig(({ mode }) => {
     server: {
       host: '0.0.0.0',
       port: '7749',
-      open: true,
+      open: false,
       // 端口占用直接退出
       strictPort: true
       // 本地服务 CORS 是否开启

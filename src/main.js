@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 // 引入 Pinia 状态持久化插件
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import '@/styles/normalize.css'
+import '@arco-design/web-vue/dist/arco.css'
 // 导入Unocss样式
 import 'uno.css'
 
