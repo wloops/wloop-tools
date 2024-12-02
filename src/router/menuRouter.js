@@ -40,6 +40,14 @@ export const menuRouter = [
           title: '字符串工具'
         },
         component: () => import('@/views/StringToolPage/index.vue')
+      },
+      {
+        path: 'jsonFormat',
+        name: 'JSONFormatPage',
+        meta: {
+          title: 'JSON 格式化工具'
+        },
+        component: () => import('@/views/JSONFormatPage/index.vue')
       }
       // {
       //   path: 'test',
