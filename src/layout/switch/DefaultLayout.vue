@@ -40,9 +40,9 @@ export default {
             </transition>
           </router-view>
         </a-layout-content>
-        <a-layout-footer>
+        <!-- <a-layout-footer>
           <Footer />
-        </a-layout-footer>
+        </a-layout-footer> -->
       </a-layout>
     </div>
   </div>
