@@ -16,7 +16,7 @@ importers:
         version: 2.1.7(vue@3.3.13)
       pinia-plugin-persistedstate:
         specifier: ^2.4.0
-        version: 2.4.0(pinia@2.1.7)
+        version: 2.4.0(pinia@2.1.7(vue@3.3.13))
       vue:
         specifier: ^3.2.38
         version: 3.3.13
@@ -92,19 +92,19 @@ importers:
         version: 2.8.8
       unocss:
         specifier: ^0.45.22
-        version: 0.45.30(vite@3.2.7)
+        version: 0.45.30(rollup@2.79.1)(vite@3.2.7)
       unplugin-auto-import:
         specifier: ^0.11.2
-        version: 0.11.5(@vueuse/core@9.13.0)
+        version: 0.11.5(@vueuse/core@9.13.0(vue@3.3.13))(rollup@2.79.1)
       unplugin-icons:
         specifier: ^0.14.10
-        version: 0.14.15
+        version: 0.14.15(@vue/compiler-sfc@3.3.13)
       unplugin-vue-components:
         specifier: ^0.22.7
-        version: 0.22.12(vue@3.3.13)
+        version: 0.22.12(@babel/parser@7.23.6)(rollup@2.79.1)(vue@3.3.13)
       unplugin-vue-router:
         specifier: ^0.7.0
-        version: 0.7.0(vue-router@4.2.5)(vue@3.3.13)
+        version: 0.7.0(rollup@2.79.1)(vue-router@4.2.5(vue@3.3.13))(vue@3.3.13)
       vite:
         specifier: ^3.0.9
         version: 3.2.7
@@ -1611,11 +1611,13 @@ snapshots:
 
   '@polka/url@1.0.0-next.24': {}
 
-  '@rollup/pluginutils@5.1.0':
+  '@rollup/pluginutils@5.1.0(rollup@2.79.1)':
     dependencies:
       '@types/estree': 1.0.5
       estree-walker: 2.0.2
       picomatch: 2.3.1
+    optionalDependencies:
+      rollup: 2.79.1
 
   '@rushstack/eslint-patch@1.6.1': {}
 
@@ -1625,19 +1627,19 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@unocss/astro@0.45.30(vite@3.2.7)':
+  '@unocss/astro@0.45.30(rollup@2.79.1)(vite@3.2.7)':
     dependencies:
       '@unocss/core': 0.45.30
       '@unocss/reset': 0.45.30
-      '@unocss/vite': 0.45.30(vite@3.2.7)
+      '@unocss/vite': 0.45.30(rollup@2.79.1)(vite@3.2.7)
     transitivePeerDependencies:
       - rollup
       - vite
 
-  '@unocss/cli@0.45.30':
+  '@unocss/cli@0.45.30(rollup@2.79.1)':
     dependencies:
       '@ampproject/remapping': 2.2.1
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       '@unocss/config': 0.45.30
       '@unocss/core': 0.45.30
       '@unocss/preset-uno': 0.45.30
@@ -1725,10 +1727,10 @@ snapshots:
     dependencies:
       '@unocss/core': 0.45.30
 
-  '@unocss/vite@0.45.30(vite@3.2.7)':
+  '@unocss/vite@0.45.30(rollup@2.79.1)(vite@3.2.7)':
     dependencies:
       '@ampproject/remapping': 2.2.1
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       '@unocss/config': 0.45.30
       '@unocss/core': 0.45.30
       '@unocss/inspector': 0.45.30
@@ -1744,14 +1746,15 @@ snapshots:
       vite: 3.2.7
       vue: 3.3.13
 
-  '@vue-macros/common@1.10.0(vue@3.3.13)':
+  '@vue-macros/common@1.10.0(rollup@2.79.1)(vue@3.3.13)':
     dependencies:
       '@babel/types': 7.23.6
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       '@vue/compiler-sfc': 3.3.13
-      ast-kit: 0.11.3
+      ast-kit: 0.11.3(rollup@2.79.1)
       local-pkg: 0.5.0
       magic-string-ast: 0.3.0
+    optionalDependencies:
       vue: 3.3.13
     transitivePeerDependencies:
       - rollup
@@ -1792,7 +1795,7 @@ snapshots:
     dependencies:
       eslint: 8.56.0
       eslint-config-prettier: 8.10.0(eslint@8.56.0)
-      eslint-plugin-prettier: 4.2.1(eslint-config-prettier@8.10.0)(eslint@8.56.0)(prettier@2.8.8)
+      eslint-plugin-prettier: 4.2.1(eslint-config-prettier@8.10.0(eslint@8.56.0))(eslint@8.56.0)(prettier@2.8.8)
       prettier: 2.8.8
 
   '@vue/reactivity-transform@3.3.13':
@@ -1871,26 +1874,26 @@ snapshots:
 
   argparse@2.0.1: {}
 
-  ast-kit@0.11.3:
+  ast-kit@0.11.3(rollup@2.79.1):
     dependencies:
       '@babel/parser': 7.23.6
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       pathe: 1.1.1
     transitivePeerDependencies:
       - rollup
 
-  ast-kit@0.9.5:
+  ast-kit@0.9.5(rollup@2.79.1):
     dependencies:
       '@babel/parser': 7.23.6
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       pathe: 1.1.1
     transitivePeerDependencies:
       - rollup
 
-  ast-walker-scope@0.5.0:
+  ast-walker-scope@0.5.0(rollup@2.79.1):
     dependencies:
       '@babel/parser': 7.23.6
-      ast-kit: 0.9.5
+      ast-kit: 0.9.5(rollup@2.79.1)
     transitivePeerDependencies:
       - rollup
 
@@ -2098,12 +2101,13 @@ snapshots:
     dependencies:
       eslint: 8.56.0
 
-  eslint-plugin-prettier@4.2.1(eslint-config-prettier@8.10.0)(eslint@8.56.0)(prettier@2.8.8):
+  eslint-plugin-prettier@4.2.1(eslint-config-prettier@8.10.0(eslint@8.56.0))(eslint@8.56.0)(prettier@2.8.8):
     dependencies:
       eslint: 8.56.0
-      eslint-config-prettier: 8.10.0(eslint@8.56.0)
       prettier: 2.8.8
       prettier-linter-helpers: 1.0.0
+    optionalDependencies:
+      eslint-config-prettier: 8.10.0(eslint@8.56.0)
 
   eslint-plugin-vue@9.19.2(eslint@8.56.0):
     dependencies:
@@ -2491,8 +2495,8 @@ snapshots:
 
   picomatch@2.3.1: {}
 
-  pinia-plugin-persistedstate@2.4.0(pinia@2.1.7):
-    dependencies:
+  pinia-plugin-persistedstate@2.4.0(pinia@2.1.7(vue@3.3.13)):
+    optionalDependencies:
       pinia: 2.1.7(vue@3.3.13)
 
   pinia@2.1.7(vue@3.3.13):
@@ -2639,9 +2643,9 @@ snapshots:
     dependencies:
       '@fastify/busboy': 2.1.0
 
-  unimport@1.3.0:
+  unimport@1.3.0(rollup@2.79.1):
     dependencies:
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       escape-string-regexp: 5.0.0
       fast-glob: 3.3.2
       local-pkg: 0.4.3
@@ -2655,10 +2659,10 @@ snapshots:
     transitivePeerDependencies:
       - rollup
 
-  unocss@0.45.30(vite@3.2.7):
+  unocss@0.45.30(rollup@2.79.1)(vite@3.2.7):
     dependencies:
-      '@unocss/astro': 0.45.30(vite@3.2.7)
-      '@unocss/cli': 0.45.30
+      '@unocss/astro': 0.45.30(rollup@2.79.1)(vite@3.2.7)
+      '@unocss/cli': 0.45.30(rollup@2.79.1)
       '@unocss/core': 0.45.30
       '@unocss/preset-attributify': 0.45.30
       '@unocss/preset-icons': 0.45.30
@@ -2673,25 +2677,26 @@ snapshots:
       '@unocss/transformer-compile-class': 0.45.30
       '@unocss/transformer-directives': 0.45.30
       '@unocss/transformer-variant-group': 0.45.30
-      '@unocss/vite': 0.45.30(vite@3.2.7)
+      '@unocss/vite': 0.45.30(rollup@2.79.1)(vite@3.2.7)
     transitivePeerDependencies:
       - rollup
       - supports-color
       - vite
 
-  unplugin-auto-import@0.11.5(@vueuse/core@9.13.0):
+  unplugin-auto-import@0.11.5(@vueuse/core@9.13.0(vue@3.3.13))(rollup@2.79.1):
     dependencies:
       '@antfu/utils': 0.7.7
-      '@rollup/pluginutils': 5.1.0
-      '@vueuse/core': 9.13.0(vue@3.3.13)
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       local-pkg: 0.4.3
       magic-string: 0.26.7
-      unimport: 1.3.0
+      unimport: 1.3.0(rollup@2.79.1)
       unplugin: 1.5.1
+    optionalDependencies:
+      '@vueuse/core': 9.13.0(vue@3.3.13)
     transitivePeerDependencies:
       - rollup
 
-  unplugin-icons@0.14.15:
+  unplugin-icons@0.14.15(@vue/compiler-sfc@3.3.13):
     dependencies:
       '@antfu/install-pkg': 0.1.1
       '@antfu/utils': 0.7.7
@@ -2700,13 +2705,15 @@ snapshots:
       kolorist: 1.8.0
       local-pkg: 0.4.3
       unplugin: 1.5.1
+    optionalDependencies:
+      '@vue/compiler-sfc': 3.3.13
     transitivePeerDependencies:
       - supports-color
 
-  unplugin-vue-components@0.22.12(vue@3.3.13):
+  unplugin-vue-components@0.22.12(@babel/parser@7.23.6)(rollup@2.79.1)(vue@3.3.13):
     dependencies:
       '@antfu/utils': 0.7.7
-      '@rollup/pluginutils': 5.1.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
       chokidar: 3.5.3
       debug: 4.3.4
       fast-glob: 3.3.2
@@ -2716,16 +2723,18 @@ snapshots:
       resolve: 1.22.8
       unplugin: 1.5.1
       vue: 3.3.13
+    optionalDependencies:
+      '@babel/parser': 7.23.6
     transitivePeerDependencies:
       - rollup
       - supports-color
 
-  unplugin-vue-router@0.7.0(vue-router@4.2.5)(vue@3.3.13):
+  unplugin-vue-router@0.7.0(rollup@2.79.1)(vue-router@4.2.5(vue@3.3.13))(vue@3.3.13):
     dependencies:
       '@babel/types': 7.23.6
-      '@rollup/pluginutils': 5.1.0
-      '@vue-macros/common': 1.10.0(vue@3.3.13)
-      ast-walker-scope: 0.5.0
+      '@rollup/pluginutils': 5.1.0(rollup@2.79.1)
+      '@vue-macros/common': 1.10.0(rollup@2.79.1)(vue@3.3.13)
+      ast-walker-scope: 0.5.0(rollup@2.79.1)
       chokidar: 3.5.3
       fast-glob: 3.3.2
       json5: 2.2.3
@@ -2734,8 +2743,9 @@ snapshots:
       pathe: 1.1.1
       scule: 1.1.1
       unplugin: 1.5.1
-      vue-router: 4.2.5(vue@3.3.13)
       yaml: 2.3.4
+    optionalDependencies:
+      vue-router: 4.2.5(vue@3.3.13)
     transitivePeerDependencies:
       - rollup
       - vue

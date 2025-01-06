@@ -2,7 +2,7 @@
   "name": "toolsdog",
   "version": "0.0.0",
   "scripts": {
-    "serve": "vite --mode development",
+    "dev": "vite --mode development",
     "build": "vite build --mode production",
     "preview": "vite preview --port 4173",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"

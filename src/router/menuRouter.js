@@ -48,6 +48,15 @@ export const menuRouter = [
           title: 'JSON 格式化工具'
         },
         component: () => import('@/views/JSONFormatPage/index.vue')
+      },
+      {
+        path: 'text-escape',
+        name: 'TextEscape',
+        component: () => import('@/views/TextEscapePage/index.vue'),
+        meta: {
+          title: '文本转义',
+          order: 2
+        }
       }
       // {
       //   path: 'test',
